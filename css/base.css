@@ -1,0 +1,437 @@
+@charset "utf-8";
+/* ==========================================================================
+   基础样式表
+   ========================================================================== */
+
+/* 基本属性
+   ========================================================================== */
+/**
+ *  将所有的元素的盒子模型都设置成border-box  IE8+
+ */
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/**
+ *  去掉手机长按复制
+ */
+/** {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input,
+textarea {
+    -webkit-user-select: auto;
+}*/
+
+/**
+ *  1. 设置页面的基本字体
+ *  2. 防止页面缩放，字体大小变化
+ *  3. 设置页面基础字体大小
+ */
+html {
+    font-family: "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+    -webkit-tap-highlight-color: transparent;
+    font-size: 100px; /* 3 */
+    color: #222;
+}
+
+/**
+ *  1. 将页面外边距设置为0
+ *  2. 将页面字体大小设置为15px
+ *  3. 反锯齿
+ */
+body {
+    margin: 0; /* 1 */
+    line-height: 1.42857143;
+    font-family: "微软雅黑", "黑体", sans-serif, Arial;
+    font-size: 15px; /* 2 */
+    -webkit-font-smoothing: antialiased; /* 3 */
+    -moz-osx-font-smoothing: grayscale; /* 3 */
+    overflow-x: hidden;
+    /*-webkit-overflow-scrolling: touch;*/
+    /*overflow-scrolling: touch;*/
+}
+
+/**
+ *  html5 新标签display设置为block
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/**
+ *  初始化 `img` 等标签的样式
+ *  1. 在IE 8/9中 未定义.
+ *  2. 去掉img的默认边框 IE8/9/10
+ */
+audio,
+canvas,
+progress,
+video {
+    display: inline-block; /* 1 */
+    vertical-align: baseline;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+audio,
+canvas,
+video,
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+img {
+    border: 0; /* 2 */
+}
+
+/**
+ *  IE8/9/10 不支持`hidden`属性，隐藏之
+ *  在IE 8/9/10/11, Safari, 和 Firefox < 22 中隐藏 `template` 元素
+ */
+[hidden],
+template {
+    display: none;
+}
+
+/**
+ *  不渲染没有显示控制器的audio元素
+ */
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+/**
+ *  IE 9/10/11
+ */
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/**
+ *  设置选择文本样式  >IE8
+ */
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/**
+ *  设置水平线的样式
+ */
+hr {
+    display: block;
+    margin: 1em 0;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    padding: 0;
+}
+
+/**
+ *  默认文本域垂直可调节大小
+ */
+textarea {
+    resize: vertical;
+}
+
+/**
+ *  设置`a`标签相关样式
+ *  1. 去掉IE10中的active状态的灰色背景
+ *  2. 去掉ios和android手机浏览器`a`标签点击高亮
+ */
+a {
+    background-color: transparent; /* 1 */
+}
+
+a:link {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent; /* 2 */
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+/* 文本
+   ========================================================================== */
+
+/**
+ *  `abbr` 缩写
+ */
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+/**
+ *  `dfn`标签可标记那些对特殊术语或短语的定义
+ */
+dfn {
+    font-style: italic;
+}
+
+/**
+ *  `h1` 1.5倍正常字号
+ *  `h2` 1.25倍正常字号
+ *  `h3`、`h4`、`h5`、`h6` 正常字号
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-size: 100%;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.25em;
+}
+
+p {
+    margin: 0;
+}
+
+small {
+    font-size: 80%;
+}
+
+/**
+ *  `sup` 上标
+ *  `sub` 下标
+ */
+sub,
+sup {
+    position: relative;
+    line-height: 0;
+    font-size: 75%;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* 列表
+   ========================================================================== */
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ol {
+    padding-left: 2em;
+}
+
+ul > li > ul,
+ul > li > ol,
+ol > li > ol,
+ol > li > ul {
+    margin: 1em 0;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dt + dd {
+    margin-top: .5em;
+}
+
+dd {
+    margin-left: 0;
+}
+
+dd + dt {
+    margin-top: 1em;
+}
+
+/* 容器
+   ========================================================================== */
+
+/**
+ *  `pre` 预格式化文本，常用来表示计算机源码
+ */
+pre {
+    overflow: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+/**
+ *  `figure` 用作文档中插图的图像
+ */
+figure {
+    margin: 0;
+}
+
+/* 表单
+   ========================================================================== */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+    box-shadow: none;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
+
+/**
+ *  IE中默认overflow隐藏 IE8+
+ */
+button {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+/**
+ *  重置不可操作元素鼠标指针
+ */
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+input {
+    line-height: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    padding: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    height: auto;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+/**
+ *  `legend`定义`fieldset`的标题
+ */
+legend {
+    border: 0; /* 1 */
+    padding: 0; /* 2 */
+}
+
+/**
+ *  移除`fieldset`的默认样式
+ */
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/**
+ *  `optgroup` 把相关的选项组合在一起，通过标签的label属性显示组标题
+ *  1. 标题粗体
+ */
+optgroup {
+    font-weight: bold; /* 1 */
+}
+
+/* 表格
+   ========================================================================== */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+}

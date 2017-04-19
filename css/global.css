@@ -1,0 +1,797 @@
+@charset "utf-8";
+/* ==========================================================================
+   公共样式表
+   ========================================================================== */
+
+/**
+ *  规范：
+ *  1. 类名的命名规则：分类-名称-扩展...
+ *  2. `-` 连字符仅用于连接分类、名称、和扩展之间，名称则使用`-`连接
+ *  3. 分类的命名方法：
+ *      1) 布局（grid）      => .g- 开头：将页面分割为几个大块，通常有头部、主体、主栏、侧栏、尾部等
+ *      2) 模块（module）    => .m- 开头：通常是一个语义化的可以重复使用的较大的整体！比如导航、登录、注册、各种列表、评论、搜索等
+ *      3) 元件（unit）      => .u- 开头：通常是一个不可再分的较为小巧的个体，通常被重复用于各种模块中！比如按钮、输入框、loading、图标等
+ *      4) 功能（function）  => .f- 开头：为方便一些常用样式的使用，我们将这些使用率较高的样式剥离出来，按需使用，通常这些选择器具有固定样式表现，比如清除浮动等
+ *      5) 皮肤（skin）      => .s- 开头：如果你需要把皮肤型的样式抽离出来，通常为文字色、背景色（图）、边框色等，非换肤型网站通常只提取文字色等
+ *      6) 状态（state）     => .z- 开头：为状态类样式加入前缀，统一标识，方便识别，她只能组合使用或作为后代出现
+ *      7) 页面（page）      => .p- 开头：页面相关的类名
+ *  4. 样式文件中的-sm为所有屏幕可见，-md为640px以上可见，-lg为1024px以上屏幕可见
+ *  5. 所有的辅助类以及js相关的类名不出现在页面CSS选择器中
+ *  6. url值用双引号
+ *
+ */
+
+/* 辅助（功能）类
+   ========================================================================== */
+
+/**
+ *  隐藏，不渲染
+ */
+.f-hide {
+    display: none !important;
+}
+
+/**
+ *  浮动
+ */
+.f-float-left {
+    display: block;
+    float: left;
+}
+
+.f-float-right {
+    display: block;
+    float: right;
+}
+
+/**
+ *  清除浮动
+ */
+.f-clear-float:before,
+.f-clear-float:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.f-clear-float:after {
+    clear: both;
+}
+
+/**
+ *  块居中
+ */
+.f-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/**
+ *  外边距
+ */
+.f-no-margin {
+    margin: 0 !important;
+}
+
+.f-no-margin-vertical {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.f-no-margin-horizontal {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.f-no-margin-left {
+    margin-left: 0 !important;
+}
+
+.f-no-margin-right {
+    margin-right: 0 !important;
+}
+
+.f-no-margin-top {
+    margin-top: 0 !important;
+}
+
+.f-no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+/**
+ *  内边距
+ */
+.f-no-padding {
+    padding: 0 !important;
+}
+
+.f-no-padding-vertical {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.f-no-padding-horizontal {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.f-no-padding-left {
+    padding-left: 0 !important;
+}
+
+.f-no-padding-right {
+    padding-right: 0 !important;
+}
+
+.f-no-padding-top {
+    padding-top: 0 !important;
+}
+
+.f-no-padding-bottom {
+    padding-bottom: 0 !important;
+}
+
+/**
+ *  display为block
+ */
+.f-block {
+    display: block !important;
+}
+
+/**
+ *  display为inline-block
+ */
+.f-iblock {
+    display: inline-block !important;
+    *zoom: 1 !important;
+    *display: inline !important;
+}
+
+/**
+ *  定位
+ */
+.f-relative {
+    position: relative !important;
+}
+
+.f-absolute {
+    display: block !important;
+    position: absolute !important;
+}
+
+.f-fixed {
+    display: block !important;
+    position: fixed !important;
+}
+
+.f-static {
+    position: static !important;
+}
+
+/**
+ *  文本对齐
+ */
+.f-text-left {
+    text-align: left !important;
+}
+
+.f-text-right {
+    text-align: right !important;
+}
+
+.f-text-center {
+    text-align: center !important;
+}
+
+/**
+ * 文本换行
+ * 1. 中英文混编时，英文单词可在中间断行
+ * 2. 中英文混编时，英文单词整个断行
+ */
+.f-text-break-all {
+    word-break: break-all; /* 1 */
+}
+
+.f-text-break-word {
+    word-wrap: break-word; /* 2 */
+}
+
+/**
+ *  文本单行显示
+ */
+.f-text-single-line {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/**
+ *  文本下划线
+ */
+.f-text-under-line {
+    text-decoration: underline;
+}
+
+/**
+ *  文本粗细
+ */
+.f-text-bold {
+    font-weight: bold;
+}
+
+.f-text-normal {
+    font-weight: normal;
+}
+
+.f-text-lighter {
+    font-weight: lighter;
+}
+
+/**
+ *  形状
+ */
+.f-circle {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* 网格布局
+   ========================================================================== */
+.g-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 94%;
+    max-width: 600px;
+}
+
+.g-container:before,
+.g-container:after {
+    content: " ";
+    display: table;
+}
+
+.g-container:after {
+    clear: both;
+}
+
+.g-row {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.g-row:before,
+.g-row:after {
+    content: " ";
+    display: table;
+}
+
+.g-row:after {
+    clear: both;
+}
+
+[class*="g-column-"] {
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+.g-column-sm-1 {
+    width: 8.33333333%;
+}
+
+.g-column-sm-2 {
+    width: 16.66666667%;
+}
+
+.g-column-sm-3 {
+    width: 25%;
+}
+
+.g-column-sm-4 {
+    width: 33.33333333%;
+}
+
+.g-column-sm-5 {
+    width: 41.66666667%;
+}
+
+.g-column-sm-6 {
+    width: 50%;
+}
+
+.g-column-sm-7 {
+    width: 58.33333333%;
+}
+
+.g-column-sm-8 {
+    width: 66.66666667%;
+}
+
+.g-column-sm-9 {
+    width: 75%;
+}
+
+.g-column-sm-10 {
+    width: 83.33333333%;
+}
+
+.g-column-sm-11 {
+    width: 91.66666667%;
+}
+
+.g-column-sm-12 {
+    width: 100%;
+}
+
+.g-column-offset-sm-1 {
+    margin-left: 8.33333333%;
+}
+
+.g-column-offset-sm-2 {
+    margin-left: 16.66666667%;
+}
+
+.g-column-offset-sm-3 {
+    margin-left: 25%;
+}
+
+.g-column-offset-sm-4 {
+    margin-left: 33.33333333%;
+}
+
+.g-column-offset-sm-5 {
+    margin-left: 41.66666667%;
+}
+
+.g-column-offset-sm-6 {
+    margin-left: 50%;
+}
+
+.g-column-offset-sm-7 {
+    margin-left: 58.33333333%;
+}
+
+.g-column-offset-sm-8 {
+    margin-left: 66.66666667%;
+}
+
+.g-column-offset-sm-9 {
+    margin-left: 75%;
+}
+
+.g-column-offset-sm-10 {
+    margin-left: 83.33333333%;
+}
+
+.g-column-offset-sm-11 {
+    margin-left: 91.66666667%;
+}
+
+@media only screen and (min-width: 641px) {
+
+    .g-column-md-1 {
+        width: 8.33333333%;
+    }
+
+    .g-column-md-2 {
+        width: 16.66666667%;
+    }
+
+    .g-column-md-3 {
+        width: 25%;
+    }
+
+    .g-column-md-4 {
+        width: 33.33333333%;
+    }
+
+    .g-column-md-5 {
+        width: 41.66666667%;
+    }
+
+    .g-column-md-6 {
+        width: 50%;
+    }
+
+    .g-column-md-7 {
+        width: 58.33333333%;
+    }
+
+    .g-column-md-8 {
+        width: 66.66666667%;
+    }
+
+    .g-column-md-9 {
+        width: 75%;
+    }
+
+    .g-column-md-10 {
+        width: 83.33333333%;
+    }
+
+    .g-column-md-11 {
+        width: 91.66666667%;
+    }
+
+    .g-column-md-12 {
+        width: 100%;
+    }
+
+    .g-column-offset-md-1 {
+        margin-left: 8.33333333%;
+    }
+
+    .g-column-offset-md-2 {
+        margin-left: 16.66666667%;
+    }
+
+    .g-column-offset-md-3 {
+        margin-left: 25%;
+    }
+
+    .g-column-offset-md-4 {
+        margin-left: 33.33333333%;
+    }
+
+    .g-column-offset-md-5 {
+        margin-left: 41.66666667%;
+    }
+
+    .g-column-offset-md-6 {
+        margin-left: 50%;
+    }
+
+    .g-column-offset-md-7 {
+        margin-left: 58.33333333%;
+    }
+
+    .g-column-offset-md-8 {
+        margin-left: 66.66666667%;
+    }
+
+    .g-column-offset-md-9 {
+        margin-left: 75%;
+    }
+
+    .g-column-offset-md-10 {
+        margin-left: 83.33333333%;
+    }
+
+    .g-column-offset-md-11 {
+        margin-left: 91.66666667%;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+
+    .g-column-lg-1 {
+        width: 8.33333333%;
+    }
+
+    .g-column-lg-2 {
+        width: 16.66666667%;
+    }
+
+    .g-column-lg-3 {
+        width: 25%;
+    }
+
+    .g-column-lg-4 {
+        width: 33.33333333%;
+    }
+
+    .g-column-lg-5 {
+        width: 41.66666667%;
+    }
+
+    .g-column-lg-6 {
+        width: 50%;
+    }
+
+    .g-column-lg-7 {
+        width: 58.33333333%;
+    }
+
+    .g-column-lg-8 {
+        width: 66.66666667%;
+    }
+
+    .g-column-lg-9 {
+        width: 75%;
+    }
+
+    .g-column-lg-10 {
+        width: 83.33333333%;
+    }
+
+    .g-column-lg-11 {
+        width: 91.66666667%;
+    }
+
+    .g-column-lg-12 {
+        width: 100%;
+    }
+
+    .g-column-offset-lg-1 {
+        margin-left: 8.33333333%;
+    }
+
+    .g-column-offset-lg-2 {
+        margin-left: 16.66666667%;
+    }
+
+    .g-column-offset-lg-3 {
+        margin-left: 25%;
+    }
+
+    .g-column-offset-lg-4 {
+        margin-left: 33.33333333%;
+    }
+
+    .g-column-offset-lg-5 {
+        margin-left: 41.66666667%;
+    }
+
+    .g-column-offset-lg-6 {
+        margin-left: 50%;
+    }
+
+    .g-column-offset-lg-7 {
+        margin-left: 58.33333333%;
+    }
+
+    .g-column-offset-lg-8 {
+        margin-left: 66.66666667%;
+    }
+
+    .g-column-offset-lg-9 {
+        margin-left: 75%;
+    }
+
+    .g-column-offset-lg-10 {
+        margin-left: 83.33333333%;
+    }
+
+    .g-column-offset-lg-11 {
+        margin-left: 91.66666667%;
+    }
+}
+
+/* 表单
+   ========================================================================== */
+
+.form-group {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.form-group:before,
+.form-group:after {
+    content: " ";
+    display: table;
+}
+
+.form-group:after {
+    clear: both;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+    width: 100%;
+}
+
+input,
+textarea {
+    -webkit-appearance: none;
+}
+
+/**
+ *  文件
+ */
+.u-form-file {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.u-form-file > input[type="file"] {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+/**
+ *  单选按钮、复选框
+ */
+[class*="u-radio"],
+[class*="u-checkbox"] {
+    position: relative;
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+}
+
+[class*="u-radio"] input[type="radio"],
+[class*="u-checkbox"] input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+/* 页面公共样式：元件
+   ========================================================================== */
+
+/**
+ *  文章详情内容
+ */
+.u-content {
+    word-wrap: break-word;
+    word-break: normal;
+    text-align: justify;
+}
+
+.u-content img,
+.u-content table,
+.u-content video,
+.u-content audio {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/**
+ *  icons
+ */
+[class*="u-icon"],
+[class*="u-logo"] {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    position: relative;
+    top: -1px;
+    background-image: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    vertical-align: middle;
+}
+
+[class*="u-icon"].no-offset,
+[class*="u-logo"].no-offset {
+    top: 0;
+}
+
+/**
+ *  btns
+ */
+[class*="u-btn"] {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    background-image: none;
+    border: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* 页面公共样式：页面
+   ========================================================================== */
+
+.p-body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+/* 页面公共样式：模块
+   ========================================================================== */
+/**
+ *  弹出浮窗
+ */
+[class*="m-modal"] {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+}
+
+/* 页面公共样式：布局
+   ========================================================================== */
+/**
+ *  固定伸缩
+ */
+.g-fixed-flex:before,
+.g-fixed-flex:after {
+    content: " ";
+    display: table;
+}
+
+.g-fixed-flex:after {
+    clear: both;
+}
+
+.g-fixed-flex .g-ff-left {
+    float: left;
+    margin-right: -100%;
+}
+
+.g-fixed-flex .g-ff-right {
+    float: right;
+    margin-left: -100%;
+}
+
+.g-fixed-flex .g-ff-auto {
+    float: left;
+    width: 100%;
+}
+
+/**
+ *  flex布局常用
+ */
+.g-flex,
+.g-fle-avg {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: flex !important;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+
+.g-flex > [class*="g-flex-"] {
+    display: block !important;
+}
+
+/* 宽度自动占满剩余空间 */
+.g-flex > .g-flex-1 {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+/* 宽度根据自身宽度而定 */
+.g-flex > .g-flex-0 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+}
+
+/* 内容等分 */
+.g-flex-avg > .g-flex-avg-item {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+/* 页面公共样式：主题
+   ========================================================================== */
+
+/**
+ *  背景
+ */
+
+/**
+ *  文本颜色
+ */
