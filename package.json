@@ -1,0 +1,19 @@
+{
+  "name": "basic",
+  "version": "2.0.0",
+  "description": "项目基础目录架构，2.0版本使用webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jun601011814/basic.git"
+  },
+  "author": "Month",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jun601011814/basic/issues"
+  },
+  "homepage": "https://github.com/jun601011814/basic#readme"
+}
