@@ -1,7 +1,6 @@
-#项目基础目录结构
+# 项目基础目录结构
 
 **用到的插件**
-
 ```
     babel-preset-es2015: babel转码规则，将es6语法转成es5
     gulp-autoprefixer: css自动添加前缀
@@ -18,4 +17,4 @@
     imagemin-pngquant: imagemin的深度压缩工具
 ```
 
-###使用方法
+### 使用方法
