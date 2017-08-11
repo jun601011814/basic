@@ -3,7 +3,7 @@
     swiper: //cdn.bootcss.com/Swiper/3.3.1/css/swiper.min.css?v=3.3.1
     animate: //cdn.bootcss.com/animate.css/3.5.2/animate.min.css?v=3.5.2
 ##js
-    jquery: //cdn.bootcss.com/jquery/3.1.0/jquery.min.js?v=3.1.0
+    jquery: //cdn.bootcss.com/jquery/3.2.1/jquery.js?v=3.2.1
     jquery-compat: //cdn.bootcss.com/jquery-compat/3.0.0-alpha1/jquery.min.js?v=3.0.0
     layer: //cdn.bootcss.com/layer/2.4/layer.min.js?v=2.4
     swiper: //cdn.bootcss.com/Swiper/3.3.1/js/swiper.jquery.min.js?v=3.3.1
