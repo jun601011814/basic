@@ -11,8 +11,11 @@ const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const cache = require('gulp-cache');
 const concat = require('gulp-concat');
+const rev = require('gulp-rev');
+const revCollector = require('gulp-rev-collector');
 const rename = require('gulp-rename');
 const clean = require('gulp-clean');
+const gulpsync = require('gulp-sync')(gulp);
 
 // 清除script文件夹
 gulp.task('cleanScripts', function () {
@@ -41,9 +44,9 @@ gulp.task('cleanHtml', function () {
 
 // 转换压缩js文件
 gulp.task('scripts', ['cleanScripts'], function () {
-    gulp.src('src/js/**/*.js')
+    return gulp.src('src/js/**/*.js')
         .pipe(babel())
-        .pipe(gulp.dest('dist/js'))
+        // .pipe(gulp.dest('dist/js'))
         .pipe(uglify())
         // 开启hex转码
         // .pipe(str2hex({
@@ -57,21 +60,24 @@ gulp.task('scripts', ['cleanScripts'], function () {
 
 // 转换压缩样式文件
 gulp.task('styles', ['cleanCss'], function () {
-    gulp.src('src/scss/**/*.scss')
+    return gulp.src(['src/scss/**/*.scss'], { base: 'css' })
         .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
         .pipe(autoprefixer({
             browsers: ['last 4 versions', 'Android >= 4.0']
         }))
         .pipe(concat('style.css'))
-        .pipe(gulp.dest('dist/css'))
+        // .pipe(gulp.dest('dist/css'))
         .pipe(minifyCss())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(rev())
+        .pipe(gulp.dest('dist/css'))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest('dist/rev'));
 });
 
 // 转换压缩图片
 gulp.task('images', ['cleanImages'], function () {
-    gulp.src('src/images/**/*.{png,jpg,gif,ico}')
+    return gulp.src('src/images/**/*.{png,jpg,gif,ico}')
         .pipe(cache(imagemin({
             progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
             svgoPlugins: [{ removeViewBox: false }],//不要移除svg的viewbox属性
@@ -82,16 +88,24 @@ gulp.task('images', ['cleanImages'], function () {
 
 // 压缩html
 gulp.task('html', ['cleanHtml'], function () {
-    gulp.src('src/*.html')
+    return gulp.src('src/*.html')
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['scripts', 'styles', 'images', 'html'], function () {
-    // 监听文件
-    gulp.watch('src/js/**/*.js', ['scripts']);
-    gulp.watch('src/scss/**/*.scss', ['styles']);
-    gulp.watch('src/images/**/*.{png,jpg,gif,ico}', ['images']);
-    gulp.watch('src/*.html', ['html']);
-});
+gulp.task('rev', function () {
+    return gulp.src(['./dist/rev/*.json', './dist/*.html'])
+        .pipe(revCollector())
+        .pipe(gulp.dest('dist'));
+})
 
-gulp.task('build', ['scripts', 'styles', 'images', 'html']);
+// gulp.task('default', ['scripts', 'styles', 'images', 'html'], function () {
+//     // 监听文件
+//     gulp.watch('src/js/**/*.js', ['scripts']);
+//     gulp.watch('src/scss/**/*.scss', ['styles']);
+//     gulp.watch('src/images/**/*.{png,jpg,gif,ico}', ['images']);
+//     gulp.watch('src/*.html', ['html']);
+// });
+
+gulp.task('build', ['scripts', 'styles', 'images', 'html'], function () {
+    gulp.start('rev')
+});

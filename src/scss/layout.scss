@@ -1,0 +1,19 @@
+/* 布局
+   ========================================================================== */
+
+.g-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 94%;
+    max-width: 600px;
+}
+
+.g-container:before,
+.g-container:after {
+    content: " ";
+    display: table;
+}
+
+.g-container:after {
+    clear: both;
+}

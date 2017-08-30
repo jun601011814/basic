@@ -15,6 +15,8 @@
     gulp-str2hex: js hex转码混淆
     gulp-uglify: js压缩
     imagemin-pngquant: imagemin的深度压缩工具
+    gulp-rev: 对文件名加MD5后缀
+    gulp-rev-collector 路径替换
 ```
 
 ### 使用方法
