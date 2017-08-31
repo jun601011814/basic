@@ -15,7 +15,6 @@ const rev = require('gulp-rev');
 const revCollector = require('gulp-rev-collector');
 const rename = require('gulp-rename');
 const clean = require('gulp-clean');
-const gulpsync = require('gulp-sync')(gulp);
 
 // 清除script文件夹
 gulp.task('cleanScripts', function () {
@@ -96,15 +95,17 @@ gulp.task('rev', function () {
     return gulp.src(['./dist/rev/*.json', './dist/*.html'])
         .pipe(revCollector())
         .pipe(gulp.dest('dist'));
-})
+});
 
-// gulp.task('default', ['scripts', 'styles', 'images', 'html'], function () {
-//     // 监听文件
-//     gulp.watch('src/js/**/*.js', ['scripts']);
-//     gulp.watch('src/scss/**/*.scss', ['styles']);
-//     gulp.watch('src/images/**/*.{png,jpg,gif,ico}', ['images']);
-//     gulp.watch('src/*.html', ['html']);
-// });
+gulp.task('default', ['build'], function () {
+    // 监听文件
+    gulp.watch([
+        'src/js/**/*.js',
+        'src/scss/**/*.scss',
+        'src/images/**/*.{png,jpg,gif,ico}',
+        'src/*.html'
+    ], ['build']);
+});
 
 gulp.task('build', ['scripts', 'styles', 'images', 'html'], function () {
     gulp.start('rev')
