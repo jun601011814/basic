@@ -4,7 +4,7 @@
   const docEl = document.documentElement;
 
   if (!metaEl) {
-    metaEl = documnet.createElement('meta');
+    metaEl = document.createElement('meta');
     metaEl.setAttribute('name', 'viewport');
     metaEl.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no');
     docEl.firstElementChild.appendChild(metaEl);
@@ -37,7 +37,7 @@
     docEl.setAttribute('data-dpr', dpr);
 
     // 动态写入样式
-    docEl.style.fontSize = rem;
+    docEl.style.fontSize = rem + 'px';
 
     window.rem = rem;
   }
