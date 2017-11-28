@@ -1,0 +1,78 @@
+// ======== mixins ========
+@import "./variables.scss";
+
+// 设置宽高
+@mixin setSize($width: auto, $height: auto) {
+    width: $width;
+    height: $height;
+}
+
+// 设置单行模式
+@mixin setSingleline($width: 100%) {
+    max-width: $width;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 多行省略
+@mixin setMultiLine($line) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line;
+    overflow: hidden;
+}
+
+// 设置背景色
+@mixin setBgInit($color: transparent, $image: none, $size: contain, $pos: center, $repeat: no-repeat) {
+    background: {
+        color: $color;
+        image: $image;
+        repeat: $repeat;
+        position: $pos;
+        size: $size;
+    }
+}
+
+// 设置单选、多选初始样式
+@mixin setCheck($type) {
+    display: inline-block;
+    position: relative;
+
+    & > label {
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    & > input[type="#{$type}"] {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        visibility: hidden;
+    }
+}
+
+// 设置flex布局
+@mixin setFlex($direction: row, $wrap: nowrap) {
+    display: flex;
+    flex-flow: $direction $wrap;
+}
+
+// 设置文章内容容器默认样式
+@mixin setArticleContent($fontSize: 15px, $color: $font-color-default) {
+    text-align: justify;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size: $fontSize; /* px */
+    color: $color;
+
+    img,
+    audio,
+    video {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}

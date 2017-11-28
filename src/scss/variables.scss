@@ -1,0 +1,17 @@
+// ======== 全局变量 ========
+$color-default: #354048;
+$color-primary: #26bf81;
+$color-white: #fff;
+
+// Input
+$input-placeholder-color: #929292;
+
+// Font
+$font-family-default: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+$font-color-default: $color-default;
+
+// Button
+$button-primary-bg: $color-primary;
+$button-primary-active: #22ac74;
+$button-primary-disabled-bg: rgba($color-primary, .6);
+$button-primary-color: $color-white;

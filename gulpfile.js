@@ -1,112 +1,125 @@
-'use strict';
+const gulp = require('gulp')
+const babel = require('gulp-babel')
+const uglify = require('gulp-uglify')
+const str2hex = require('gulp-str2hex')
+const minifyCss = require('gulp-clean-css')
+const sass = require('gulp-sass')
+const autoprefixer = require('autoprefixer')
+const postcss = require('gulp-postcss')
+const px2rem = require('postcss-px2rem')
+const imagemin = require('gulp-imagemin')
+const pngquant = require('imagemin-pngquant')
+const cache = require('gulp-cache')
+const concat = require('gulp-concat')
+const rev = require('gulp-rev')
+const revCollector = require('gulp-rev-collector')
+const rename = require('gulp-rename')
+const clean = require('gulp-clean')
+const replace = require('gulp-replace')
 
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const uglify = require('gulp-uglify');
-const str2hex = require('gulp-str2hex');
-const minifyCss = require('gulp-clean-css');
-const sass = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const imagemin = require('gulp-imagemin');
-const pngquant = require('imagemin-pngquant');
-const cache = require('gulp-cache');
-const concat = require('gulp-concat');
-const rev = require('gulp-rev');
-const revCollector = require('gulp-rev-collector');
-const rename = require('gulp-rename');
-const clean = require('gulp-clean');
+const paths = {
+  clean: 'dist',
+  src: {
+    scripts: ['src/js/**/*.js'],
+    styles: ['src/scss/*.scss'],
+    pageStyles: ['src/scss/page/**/*.scss'],
+    images: ['src/images/**/*.{png,jpg,gif,ico}'],
+    html: ['src/*.html']
+  },
+  dist: {
+    scripts: 'dist/js',
+    styles: 'dist/css',
+    images: 'dist/images',
+    html: 'dist'
+  }
+}
 
-// 清除script文件夹
-gulp.task('cleanScripts', function () {
-    return gulp.src(['dist/js'], { read: false })
-        .pipe(clean());
-});
-
-// 清除css文件夹
-gulp.task('cleanCss', function () {
-    return gulp.src(['dist/css'], { read: false })
-        .pipe(clean());
-        // .pipe(notify({ message: '文件清除成功' }));
-});
-
-// 清除images文件夹
-gulp.task('cleanImages', function () {
-    return gulp.src(['dist/images'], { read: false })
-        .pipe(clean());
-});
-
-// 清除html文件
-gulp.task('cleanHtml', function () {
-    return gulp.src(['dist/*.html'], { read: false })
-        .pipe(clean());
-});
+// 清除文件夹
+gulp.task('clean', function () {
+  return gulp.src(paths.clean, {read: false})
+    .pipe(clean())
+})
 
 // 转换压缩js文件
-gulp.task('scripts', ['cleanScripts'], function () {
-    return gulp.src('src/js/**/*.js')
-        .pipe(babel())
-        // .pipe(gulp.dest('dist/js'))
-        .pipe(uglify())
-        // 开启hex转码
-        // .pipe(str2hex({
-        //     hexall: false, // 是否转换英文
-        //     placeholdMode: 2,
-        //     compress: true
-        // }))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('dist/js'));
-});
+gulp.task('scripts', function () {
+  return gulp.src(paths.src.scripts)
+    .pipe(babel())
+    .pipe(gulp.dest(paths.dist.scripts))
+    .pipe(uglify())
+    // 开启hex转码
+    // .pipe(str2hex({
+    //     hexall: false, // 是否转换英文
+    //     placeholdMode: 2,
+    //     compress: true
+    // }))
+    .pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(paths.dist.scripts))
+})
 
 // 转换压缩样式文件
-gulp.task('styles', ['cleanCss'], function () {
-    return gulp.src(['src/scss/**/*.scss'], { base: 'css' })
-        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
-        .pipe(autoprefixer({
-            browsers: ['last 4 versions', 'Android >= 4.0']
-        }))
-        .pipe(concat('style.css'))
-        // .pipe(gulp.dest('dist/css'))
-        .pipe(minifyCss())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(rev())
-        .pipe(gulp.dest('dist/css'))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest('dist/rev'));
-});
+gulp.task('styles', function () {
+  const processors = [
+    px2rem({remUnit: 75}),
+    autoprefixer({
+      browsers: ['last 4 versions', 'Android >= 4.0']
+    })
+  ]
+  gulp.src(paths.src.pageStyles, {base: 'src/scss'})
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+    .pipe(postcss(processors))
+    .pipe(gulp.dest(paths.dist.styles))
+    .pipe(minifyCss())
+    .pipe(rename({suffix: '.min'}))
+    // .pipe(rev())
+    .pipe(gulp.dest(paths.dist.styles))
+    // .pipe(rev.manifest())
+    // .pipe(gulp.dest('dist/rev'));
+
+  return gulp.src(paths.src.styles, {base: 'src/scss'})
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+    .pipe(postcss(processors))
+    .pipe(concat('global.css'))
+    .pipe(gulp.dest(paths.dist.styles))
+    .pipe(minifyCss())
+    .pipe(rename({suffix: '.min'}))
+    // .pipe(rev())
+    .pipe(gulp.dest(paths.dist.styles))
+    // .pipe(rev.manifest())
+    // .pipe(gulp.dest('dist/rev'));
+})
 
 // 转换压缩图片
-gulp.task('images', ['cleanImages'], function () {
-    return gulp.src('src/images/**/*.{png,jpg,gif,ico}')
-        .pipe(cache(imagemin({
-            progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
-            svgoPlugins: [{ removeViewBox: false }],//不要移除svg的viewbox属性
-            use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
-        })))
-        .pipe(gulp.dest('dist/images'));
-});
+gulp.task('images', function () {
+  return gulp.src(paths.src.images)
+    .pipe(cache(imagemin({
+      progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
+      svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
+      use: [pngquant()] //使用pngquant深度压缩png图片的imagemin插件
+    })))
+    .pipe(gulp.dest(paths.dist.images))
+})
 
 // 压缩html
-gulp.task('html', ['cleanHtml'], function () {
-    return gulp.src('src/*.html')
-        .pipe(gulp.dest('dist'));
-});
+gulp.task('html', function () {
+  return gulp.src(paths.src.html)
+    .pipe(replace(/<link\s*.*href=".*(\.scss)"\s*.*\/?>/g, function (match) {
+      return match.replace(/\/scss\//g, '/css/').replace(/\.scss/g, '.min.css')
+    }))
+    .pipe(gulp.dest(paths.dist.html))
+})
 
-gulp.task('rev', function () {
-    return gulp.src(['./dist/rev/*.json', './dist/*.html'])
-        .pipe(revCollector())
-        .pipe(gulp.dest('dist'));
-});
+gulp.task('watch', function () {
+  // 监听文件
+  gulp.watch([
+    ...paths.src.scripts,
+    ...paths.src.styles,
+    ...paths.src.images,
+    ...paths.src.html,
+  ], ['default'])
+})
 
-gulp.task('default', ['build'], function () {
-    // 监听文件
-    gulp.watch([
-        'src/js/**/*.js',
-        'src/scss/**/*.scss',
-        'src/images/**/*.{png,jpg,gif,ico}',
-        'src/*.html'
-    ], ['build']);
-});
+gulp.task('default', ['clean'], function () {
+  gulp.start(['html', 'styles', 'scripts', 'images'])
+  // gulp.start('rev')
+})
 
-gulp.task('build', ['scripts', 'styles', 'images', 'html'], function () {
-    gulp.start('rev')
-});

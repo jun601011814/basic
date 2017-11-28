@@ -1,0 +1,96 @@
+// ======== 辅助（功能）类 ========
+@import "./variables.scss";
+@import "./mixins.scss";
+
+// 浮动
+.f-float-left {
+    display: block;
+    float: left;
+}
+
+.f-float-right {
+    display: block;
+    float: right;
+}
+
+// 清除浮动
+.f-clear-float {
+
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+// 块居中
+.f-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// 文本对齐
+.f-text-left {
+    text-align: left;
+}
+
+.f-text-right {
+    text-align: right;
+}
+
+.f-text-center {
+    text-align: center;
+}
+
+// 文本换行
+.f-text-break-all {
+    // 中英文混编时，英文单词可在中间断行
+    word-break: break-all;
+}
+
+.f-text-break-word {
+    // 中英文混编时，英文单词整个断行
+    word-wrap: break-word;
+}
+
+// 文本单行显示
+.f-text-single-line {
+    @include setSingleline();
+}
+
+// 文本下划线
+.f-text-under-line {
+    text-decoration: underline;
+}
+
+// 文本粗细
+.f-text-bold {
+    font-weight: bold;
+}
+
+.f-text-normal {
+    font-weight: normal;
+}
+
+.f-text-lighter {
+    font-weight: lighter;
+}
+
+// ==== flex布局常用 ====
+.f-flex {
+    @include setFlex();
+}
+
+// 内容等分
+.f-flex-avg {
+    @include setFlex();
+
+    & > .f-flex-avg-item {
+        display: block;
+        flex: 1;
+    }
+}

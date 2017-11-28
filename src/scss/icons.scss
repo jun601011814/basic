@@ -1,0 +1,19 @@
+// ======== icon、logo样式表 ========
+@import "./variables.scss";
+@import "./mixins.scss";
+
+[class*="u-icon"],
+[class*="u-logo"] {
+    @include setBgInit();
+    display: inline-block;
+    position: relative;
+    top: -1px; /* px */
+    vertical-align: middle;
+
+    &.no-offset {
+        position: static;
+        top: auto;
+    }
+}
+// ==== icons ====
+// ==== logos ====

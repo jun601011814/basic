@@ -1,35 +1,36 @@
-/* 页面公共样式：元件
-   ========================================================================== */
+// ======== 小元件样式表 ========
 
-/**
- *  icons
- */
-[class*="u-icon"],
-[class*="u-logo"] {
+// ==== 图片容器 ====
+.u-image {
     display: inline-block;
-    position: relative;
-    top: -1px;
-    background-image: none;
-    background-position: center;
-    background-repeat: no-repeat;
-    -webkit-background-size: contain;
-    background-size: contain;
-    vertical-align: middle;
-}
-
-[class*="u-icon"].no-offset,
-[class*="u-logo"].no-offset {
-    top: 0;
-}
-
-/**
- *  btns
- */
-[class*="u-btn"] {
-    display: inline-block;
-    background-image: none;
-    border: none;
+    font-size: 0;
+    line-height: 1;
+    overflow: hidden;
     text-align: center;
-    white-space: nowrap;
     vertical-align: middle;
+
+    &.round {
+        border-radius: 50%;
+    }
+
+    & > img {
+        vertical-align: middle;
+    }
+
+    &.horizontal > img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    &.auto > img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &.vertical > img {
+        width: auto;
+        max-height: 100%;
+    }
 }

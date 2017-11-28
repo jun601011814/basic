@@ -1,0 +1,20 @@
+// ======== 布局样式表 ========
+@import "./variables.scss";
+@import "./mixins.scss";
+
+// ==== 固定在页面上的顶部跟底部 ====
+.g-header,
+.g-footer {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.g-header {
+    top: 0;
+}
+
+.g-footer {
+    bottom: 0;
+}
