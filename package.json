@@ -1,7 +1,7 @@
 {
-  "name": "gift-bag",
-  "version": "1.0.0",
-  "description": "自客3.1.0礼包活动",
+  "name": "basic",
+  "version": "2.0.0",
+  "description": "项目脚手架",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
